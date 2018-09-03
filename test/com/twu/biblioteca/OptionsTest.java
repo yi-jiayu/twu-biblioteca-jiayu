@@ -45,7 +45,10 @@ public class OptionsTest {
         String expected = "Which book do you want to borrow?\n" +
                 "(1) Harry Potter and the Philosopher's Stone\n" +
                 "(2) Harry Potter and the Chamber of Secrets\n" +
-                "No such option! Please try again:\n";
+                "No such option! Please try again:\n" +
+                "Which book do you want to borrow?\n" +
+                "(1) Harry Potter and the Philosopher's Stone\n" +
+                "(2) Harry Potter and the Chamber of Secrets\n";
         // replace line endings on windows
         String actual = buf.toString().replace("\r\n", "\n");
         assertEquals(expected, actual);
@@ -67,7 +70,10 @@ public class OptionsTest {
         String expected = "Which book do you want to borrow?\n" +
                 "(1) Harry Potter and the Philosopher's Stone\n" +
                 "(2) Harry Potter and the Chamber of Secrets\n" +
-                "Enter the number corresponding to your selected option:\n";
+                "Enter the number corresponding to your selected option:\n" +
+                "Which book do you want to borrow?\n" +
+                "(1) Harry Potter and the Philosopher's Stone\n" +
+                "(2) Harry Potter and the Chamber of Secrets\n";
         // replace line endings on windows
         String actual = buf.toString().replace("\r\n", "\n");
         assertEquals(expected, actual);
