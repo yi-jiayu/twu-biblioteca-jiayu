@@ -3,7 +3,6 @@ package com.twu.biblioteca;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,10 +45,10 @@ class Options {
         while (true) {
             this.show();
             try {
-                var choice = sc.nextInt();
+                var index = Integer.parseInt(sc.nextLine());
                 // choice - 1 here to convert it back to a 0-indexed value
-                return this.keys.get(choice - 1);
-            } catch (InputMismatchException e) {
+                return this.keys.get(index - 1);
+            } catch (NumberFormatException e) {
                 this.os.println(invalidInputErrorText);
             } catch (IndexOutOfBoundsException e) {
                 this.os.println(invalidChoiceErrorText);
