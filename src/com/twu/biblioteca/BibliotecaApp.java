@@ -1,7 +1,11 @@
 package com.twu.biblioteca;
 
+import java.util.List;
+
 public class BibliotecaApp {
     private String welcomeMsg = "Welcome to Biblioteca!";
+    private String checkoutSuccessMsg = "Thank you! Enjoy the book";
+    private String checkoutFailureMsg = "That book is not available";
     private BookRepository bookRepo = new HardcodedBookRepository();
 
     public BibliotecaApp() {
@@ -43,9 +47,29 @@ public class BibliotecaApp {
 
     private void listBooks() {
         var table = new Table("Title", "Author", "Year Published");
-        for (Book book : bookRepo.listBooks()) {
+        List<Book> books = bookRepo.listBooks();
+        for (Book book : books) {
             table.addRow(book.title, book.author, Integer.toString(book.yearPublished));
         }
-        System.out.println(table);
+        while (true) {
+
+            System.out.println(table);
+            var options = new Options("Which book would you like to borrow?");
+            for (Book book : books) {
+                options.addOption(book.title, book.title);
+            }
+            options.addOption("back", "Back to main menu");
+            var title = options.getChoice();
+            if (title.equals("back")) {
+                return;
+            }
+            var success = bookRepo.checkoutTitle(title);
+            if (success) {
+                System.out.println(checkoutSuccessMsg);
+                return;
+            } else {
+                System.out.println(checkoutFailureMsg);
+            }
+        }
     }
 }
