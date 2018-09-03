@@ -14,8 +14,8 @@ class Options {
     private List<String> keys = new ArrayList<>();
     private List<String> options = new ArrayList<>();
 
-    private static final String invalidChoiceErrorText = "No such option! Please try again:";
-    private static final String invalidInputErrorText = "Enter the number corresponding to your selected option:";
+    private String invalidChoiceErrorText = "No such option! Please try again:";
+    private String invalidInputErrorText = "Enter the number corresponding to your selected option:";
 
     Options(String prompt) {
         this.prompt = prompt;
@@ -54,5 +54,13 @@ class Options {
                 this.os.println(invalidChoiceErrorText);
             }
         }
+    }
+
+    void setInvalidChoiceErrorText(String text) {
+        this.invalidChoiceErrorText = text;
+    }
+
+    void setInvalidInputErrorText(String text) {
+        this.invalidInputErrorText = text;
     }
 }
