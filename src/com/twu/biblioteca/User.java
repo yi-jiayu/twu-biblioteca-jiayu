@@ -2,10 +2,13 @@ package com.twu.biblioteca;
 
 public class User {
     private LibraryNumber libraryNumber;
-    private final PasswordHash passwordHash;
-    private final String name;
-    private final String email;
-    private final String phone;
+    private PasswordHash passwordHash;
+    private String name;
+    private String email;
+    private String phone;
+
+    public User() {
+    }
 
     // for creating new users internally without validation
     User(String libraryNumber, String password, String name, String email, String phone) {
@@ -20,11 +23,11 @@ public class User {
         this.phone = phone;
     }
 
-    public LibraryNumber getLibraryNumber() {
+    LibraryNumber getLibraryNumber() {
         return libraryNumber;
     }
 
-    public PasswordHash getPasswordHash() {
+    PasswordHash getPasswordHash() {
         return passwordHash;
     }
 
