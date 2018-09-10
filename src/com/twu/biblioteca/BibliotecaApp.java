@@ -62,8 +62,12 @@ class BibliotecaApp {
         for (Book book : books) {
             table.addRow(book.title, book.author, Integer.toString(book.yearPublished));
         }
+        System.out.println(table);
+        borrowBooks(books);
+    }
+
+    private void borrowBooks(List<Book> books) {
         while (true) {
-            System.out.println(table);
             var options = new Options("Which book would you like to borrow?");
             for (Book book : books) {
                 options.addOption(book.title, book.title);
