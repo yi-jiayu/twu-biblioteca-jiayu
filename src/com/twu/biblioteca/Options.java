@@ -10,12 +10,9 @@ class Options {
     private InputStream is = System.in;
     private PrintStream os = System.out;
 
-    private String prompt;
-    private List<String> keys = new ArrayList<>();
-    private List<String> options = new ArrayList<>();
-
-    private String invalidChoiceErrorText = "No such option! Please try again:";
-    private String invalidInputErrorText = "Enter the number corresponding to your selected option:";
+    private final String prompt;
+    private final List<String> keys = new ArrayList<>();
+    private final List<String> options = new ArrayList<>();
 
     Options(String prompt) {
         this.prompt = prompt;
@@ -40,27 +37,15 @@ class Options {
         }
     }
 
-    String getChoice() {
+    String getChoice() throws InvalidChoiceException {
         var sc = new Scanner(this.is);
-        while (true) {
-            this.show();
-            try {
-                var index = Integer.parseInt(sc.nextLine());
-                // choice - 1 here to convert it back to a 0-indexed value
-                return this.keys.get(index - 1);
-            } catch (NumberFormatException e) {
-                this.os.println(invalidInputErrorText);
-            } catch (IndexOutOfBoundsException e) {
-                this.os.println(invalidChoiceErrorText);
-            }
+        this.show();
+        try {
+            var index = Integer.parseInt(sc.nextLine());
+            // choice - 1 here to convert it back to a 0-indexed value
+            return this.keys.get(index - 1);
+        } catch (NumberFormatException | IndexOutOfBoundsException e) {
+            throw new InvalidChoiceException();
         }
-    }
-
-    void setInvalidChoiceErrorText(String text) {
-        this.invalidChoiceErrorText = text;
-    }
-
-    void setInvalidInputErrorText(String text) {
-        this.invalidInputErrorText = text;
     }
 }
