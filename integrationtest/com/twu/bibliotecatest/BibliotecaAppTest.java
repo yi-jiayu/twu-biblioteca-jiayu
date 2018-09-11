@@ -598,10 +598,10 @@ class BibliotecaAppTest {
                 "(5) Log out\n" +
                 "(6) Account information\n" +
                 "(7) Quit\n" +
-                "> Library number: 123-4567\n" +
-                "Name: John Doe\n" +
-                "Email: johndoe@example.com\n" +
-                "Phone:  020-30303030\n" +
+                "> Library number : 123-4567\n" +
+                "Name           : John Doe\n" +
+                "Email          : johndoe@example.com\n" +
+                "Phone          : 020-30303030\n" +
                 "Please select an option:\n" +
                 "(1) List books\n" +
                 "(2) List movies\n" +

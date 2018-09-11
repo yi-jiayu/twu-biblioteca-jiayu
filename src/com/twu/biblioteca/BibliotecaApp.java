@@ -285,9 +285,9 @@ public class BibliotecaApp {
     }
 
     private void accountInfo() {
-        this.os.printf("Library number: %s\n", user.getLibraryNumber());
-        this.os.printf("Name: %s\n", user.getName());
-        this.os.printf("Email: %s\n", user.getEmail());
-        this.os.printf("Phone: %s\n", user.getPhone());
+        this.os.printf("Library number : %s\n", user.getLibraryNumber());
+        this.os.printf("Name           : %s\n", user.getName());
+        this.os.printf("Email          : %s\n", user.getEmail());
+        this.os.printf("Phone          : %s\n", user.getPhone());
     }
 }
