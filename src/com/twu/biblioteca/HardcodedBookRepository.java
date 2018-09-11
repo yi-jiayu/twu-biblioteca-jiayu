@@ -8,9 +8,9 @@ public class HardcodedBookRepository implements BookRepository {
     private final Map<String, BookStatus> statuses = new HashMap<>();
 
     HardcodedBookRepository() {
-        books.add(new Book("Compilers: Principles, Techniques, and Tools", "Alfred V. Aho, Monica S. Lam, Ravi Sethi, and Jeffrey D. Ullman", 1986));
-        books.add(new Book("Introduction to Algorithms", "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest and Clifford Stein", 1990));
-        books.add(new Book("Design Patterns: Elements of Reusable Object-Oriented Software", "Erich Gamma, Richard Helm, Ralph Johnson and John Vlissides", 1994));
+        books.add(new Book("The Lord of the Rings", "J. R. R. Tolkien", 1954));
+        books.add(new Book("The Little Prince", "Antoine de Saint-Exupéry", 1943));
+        books.add(new Book("Harry Potter and the Philosopher's Stone", "J. K. Rowling", 1997));
         for (Book book : books) {
             statuses.put(book.getTitle(), new BookStatus(book));
         }

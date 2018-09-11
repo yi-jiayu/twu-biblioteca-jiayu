@@ -116,6 +116,11 @@ public class BibliotecaApp {
     }
 
     private void borrowBooks(List<Book> books) {
+        if (user == null) {
+            this.os.println("You must be logged in to borrow books.");
+            return;
+        }
+
         while (true) {
             var options = new Options(this.sc, this.os, "Which book would you like to borrow?");
             for (Book book : books) {
@@ -127,7 +132,7 @@ public class BibliotecaApp {
                 if (title.equals("back")) {
                     return;
                 }
-                var success = bookRepository.checkoutTitle(new User(), title);
+                var success = bookRepository.checkoutTitle(user, title);
                 if (success) {
                     this.os.println(checkoutSuccessMsg);
                     return;
@@ -141,10 +146,13 @@ public class BibliotecaApp {
     }
 
     private void returnBook() {
+        if (user == null) {
+            this.os.println("You must be logged in to return books.");
+            return;
+        }
         this.os.println("What is the title of the book you wish to return?");
-        var sc = new Scanner(this.is);
         var title = sc.nextLine();
-        if (this.bookRepository.returnTitle(new User(), title)) {
+        if (this.bookRepository.returnTitle(user, title)) {
             this.os.println(returnSuccessMsg);
         } else {
             this.os.println(returnFailureMsg);
