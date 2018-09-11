@@ -49,6 +49,13 @@ public class HardcodedMovieRepository implements MovieRepository {
         return false;
     }
 
+    @Override
+    public List<Movie> getBorrowedMovies(User user) {
+        return movies.stream()
+                .filter(m -> statuses.get(m.getName()).checkedOutBy == user)
+                .collect(Collectors.toList());
+    }
+
     private class MovieStatus {
         private final Movie movie;
         private User checkedOutBy = null;

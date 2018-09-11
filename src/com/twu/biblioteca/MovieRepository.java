@@ -10,4 +10,6 @@ interface MovieRepository {
     boolean checkoutMovie(User user, String name);
 
     boolean returnMovie(User user, String name);
+
+    List<Movie> getBorrowedMovies(User user);
 }

@@ -10,4 +10,6 @@ interface BookRepository {
     boolean checkoutTitle(User user, String title);
 
     boolean returnTitle(User user, String title);
+
+    List<Book> getBorrowedBooks(User user);
 }

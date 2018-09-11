@@ -48,6 +48,13 @@ public class HardcodedBookRepository implements BookRepository {
         return false;
     }
 
+    @Override
+    public List<Book> getBorrowedBooks(User user) {
+        return books.stream()
+                .filter(b -> statuses.get(b.getTitle()).checkedOutBy == user)
+                .collect(Collectors.toList());
+    }
+
     private class BookStatus {
         private final Book book;
         private User checkedOutBy = null;

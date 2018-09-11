@@ -185,12 +185,32 @@ public class BibliotecaApp {
             this.os.println("You must be logged in to return books.");
             return;
         }
-        this.os.println("What is the title of the book you wish to return?");
-        var title = sc.nextLine();
-        if (this.bookRepository.returnTitle(user, title)) {
-            this.os.println(returnBookSuccess);
-        } else {
-            this.os.println(returnBookFailure);
+        var borrowed = bookRepository.getBorrowedBooks(user);
+        if (borrowed.isEmpty()) {
+            this.os.println("You do not have any books to return.");
+            return;
+        }
+        var options = new Options(this.sc, this.os, "Which book would you like to return?");
+        for (Book book : borrowed) {
+            options.addOption(book.getTitle(), book.getTitle());
+        }
+        options.addOption("back", "Cancel");
+        while (true) {
+            try {
+                var title = options.getChoice();
+                if (title.equals("back")) {
+                    return;
+                }
+                var success = bookRepository.returnTitle(user, title);
+                if (success) {
+                    this.os.println(returnBookSuccess);
+                    return;
+                } else {
+                    this.os.println(returnBookFailure);
+                }
+            } catch (InvalidChoiceException e) {
+                this.os.println(invalidOptionMsg);
+            }
         }
     }
 
@@ -199,12 +219,32 @@ public class BibliotecaApp {
             this.os.println("You must be logged in to return movies.");
             return;
         }
-        this.os.println("What is the name of the movie you wish to return?");
-        var name = sc.nextLine();
-        if (this.movieRepository.returnMovie(user, name)) {
-            this.os.println(returnMovieSuccess);
-        } else {
-            this.os.println(returnMovieFailure);
+        var borrowed = movieRepository.getBorrowedMovies(user);
+        if (borrowed.isEmpty()) {
+            this.os.println("You do not have any movies to return.");
+            return;
+        }
+        var options = new Options(this.sc, this.os, "Which book would you like to return?");
+        for (Movie movie : borrowed) {
+            options.addOption(movie.getName(), movie.getName());
+        }
+        options.addOption("back", "Cancel");
+        while (true) {
+            try {
+                var title = options.getChoice();
+                if (title.equals("back")) {
+                    return;
+                }
+                var success = movieRepository.returnMovie(user, title);
+                if (success) {
+                    this.os.println(returnMovieSuccess);
+                    return;
+                } else {
+                    this.os.println(returnMovieFailure);
+                }
+            } catch (InvalidChoiceException e) {
+                this.os.println(invalidOptionMsg);
+            }
         }
     }
 

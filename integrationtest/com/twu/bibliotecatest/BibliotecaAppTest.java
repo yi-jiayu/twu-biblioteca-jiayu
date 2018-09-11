@@ -117,7 +117,7 @@ class BibliotecaAppTest {
     void successfulBorrowBook() {
         var input = new String[]{
                 "5", // login
-                "123-4567", // username
+                "123-4567", // library number
                 "password123", // password
                 "1", // list books
                 "1", // borrow first book
@@ -194,15 +194,54 @@ class BibliotecaAppTest {
     }
 
     @Test
+    void noBooksToReturn() {
+        var input = new String[]{
+                "5", // login
+                "123-4567", // library number
+                "password123", // password
+                "3", // return book
+                "7",
+        };
+        String expected = "Welcome to Biblioteca!\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log in\n" +
+                "(6) Quit\n" +
+                "> Library number: Password: Welcome, John Doe!\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log out\n" +
+                "(6) Account information\n" +
+                "(7) Quit\n" +
+                "> You do not have any books to return.\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log out\n" +
+                "(6) Account information\n" +
+                "(7) Quit\n" +
+                "> Good-bye!\n";
+        test(input, expected);
+    }
+
+    @Test
     void successfulReturnBook() {
         var input = new String[]{
                 "5", // login
-                "123-4567", // username
+                "123-4567", // library number
                 "password123", // password
                 "1", // list books
                 "1", // borrow first book
                 "3", // return book
-                "The Lord of the Rings", // book title
+                "1", // first borrowed book
                 "7", // quit
         };
         String expected = "Welcome to Biblioteca!\n" +
@@ -241,8 +280,10 @@ class BibliotecaAppTest {
                 "(5) Log out\n" +
                 "(6) Account information\n" +
                 "(7) Quit\n" +
-                "> What is the title of the book you wish to return?\n" +
-                "Thank you for returning the book.\n" +
+                "> Which book would you like to return?\n" +
+                "(1) The Lord of the Rings\n" +
+                "(2) Cancel\n" +
+                "> Thank you for returning the book.\n" +
                 "Please select an option:\n" +
                 "(1) List books\n" +
                 "(2) List movies\n" +
@@ -364,6 +405,45 @@ class BibliotecaAppTest {
     }
 
     @Test
+    void noMoviesToReturn() {
+        var input = new String[]{
+                "5", // login
+                "123-4567", // library number
+                "password123", // password
+                "4", // return movie
+                "7", // quit
+        };
+        String expected = "Welcome to Biblioteca!\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log in\n" +
+                "(6) Quit\n" +
+                "> Library number: Password: Welcome, John Doe!\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log out\n" +
+                "(6) Account information\n" +
+                "(7) Quit\n" +
+                "> You do not have any movies to return.\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log out\n" +
+                "(6) Account information\n" +
+                "(7) Quit\n" +
+                "> Good-bye!\n";
+        test(input, expected);
+    }
+
+    @Test
     void successfulReturnMovie() {
         var input = new String[]{
                 "5", // login
@@ -372,7 +452,7 @@ class BibliotecaAppTest {
                 "2", // list movies
                 "1", // borrow first movie
                 "4", // return movie
-                "Avatar", // movie name
+                "1", // first borrowed movie
                 "7", // quit
         };
         String expected = "Welcome to Biblioteca!\n" +
@@ -413,8 +493,10 @@ class BibliotecaAppTest {
                 "(5) Log out\n" +
                 "(6) Account information\n" +
                 "(7) Quit\n" +
-                "> What is the name of the movie you wish to return?\n" +
-                "Thank you for returning the movie.\n" +
+                "> Which book would you like to return?\n" +
+                "(1) Avatar\n" +
+                "(2) Cancel\n" +
+                "> Thank you for returning the movie.\n" +
                 "Please select an option:\n" +
                 "(1) List books\n" +
                 "(2) List movies\n" +
@@ -456,7 +538,7 @@ class BibliotecaAppTest {
     void logout() {
         var input = new String[]{
                 "5", // login
-                "123-4567", // username
+                "123-4567", // library number
                 "password123", // password
                 "5", // logout
                 "6", // quit
@@ -494,7 +576,7 @@ class BibliotecaAppTest {
     void accountInfo() {
         var input = new String[]{
                 "5", // login
-                "123-4567", // username
+                "123-4567", // library number
                 "password123", // password
                 "6", // account info
                 "7", // quit

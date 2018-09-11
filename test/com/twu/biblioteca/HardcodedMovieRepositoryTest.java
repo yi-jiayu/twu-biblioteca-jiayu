@@ -2,9 +2,12 @@ package com.twu.biblioteca;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class HardcodedMovieRepositoryTest {
     @Test
@@ -48,5 +51,29 @@ class HardcodedMovieRepositoryTest {
         var all = repo.listAllMovies();
         var available = repo.listAvailableMovies();
         assertThat(available, containsInAnyOrder(all.toArray()));
+    }
+
+
+    @Test
+    void showBorrowedMoviesForUserAfterBorrowing() {
+        var repo = new HardcodedMovieRepository();
+        var movie = repo.listAllMovies().stream().findFirst().orElseThrow();
+        var user = new User();
+        repo.checkoutMovie(user, movie.getName());
+        var expected = new ArrayList<Movie>();
+        expected.add(movie);
+        var actual = repo.getBorrowedMovies(user);
+        assertThat(actual, containsInAnyOrder(expected.toArray()));
+    }
+
+    @Test
+    void showBorrowedMoviesForUserAfterReturning() {
+        var repo = new HardcodedMovieRepository();
+        var movie = repo.listAllMovies().stream().findFirst().orElseThrow();
+        var user = new User();
+        repo.checkoutMovie(user, movie.getName());
+        repo.returnMovie(user, movie.getName());
+        var borrowed = repo.getBorrowedMovies(user);
+        assertTrue(borrowed.isEmpty());
     }
 }

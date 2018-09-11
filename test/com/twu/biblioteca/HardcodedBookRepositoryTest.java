@@ -2,6 +2,8 @@ package com.twu.biblioteca;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -49,5 +51,28 @@ class HardcodedBookRepositoryTest {
         var all = repo.listAllBooks();
         var available = repo.listAvailableBooks();
         assertThat(available, containsInAnyOrder(all.toArray()));
+    }
+
+    @Test
+    void showBorrowedBooksForUserAfterBorrowing() {
+        var repo = new HardcodedBookRepository();
+        var book = repo.listAllBooks().stream().findFirst().orElseThrow();
+        var user = new User();
+        repo.checkoutTitle(user, book.getTitle());
+        var expected = new ArrayList<Book>();
+        expected.add(book);
+        var actual = repo.getBorrowedBooks(user);
+        assertThat(actual, containsInAnyOrder(expected.toArray()));
+    }
+
+    @Test
+    void showBorrowedBooksForUserAfterReturning() {
+        var repo = new HardcodedBookRepository();
+        var book = repo.listAllBooks().stream().findFirst().orElseThrow();
+        var user = new User();
+        repo.checkoutTitle(user, book.getTitle());
+        repo.returnTitle(user, book.getTitle());
+        var borrowed = repo.getBorrowedBooks(user);
+        assertTrue(borrowed.isEmpty());
     }
 }
