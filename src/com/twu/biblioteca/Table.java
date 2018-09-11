@@ -5,11 +5,32 @@ import java.util.List;
 
 class Table {
     private final String[] header;
-    private List<String[]> rows = new ArrayList<>();
+    private final List<String[]> rows = new ArrayList<>();
 
 
     Table(String... header) {
         this.header = header;
+    }
+
+    private static String padRight(String s, int n) {
+        return String.format("%-" + n + "s", s);
+    }
+
+    private static String formatColumns(int[] widths, String[] columns) {
+        int numColumns = widths.length;
+        var padded = new String[numColumns];
+        for (int i = 0; i < numColumns; i++) {
+            padded[i] = padRight(columns[i], widths[i]);
+        }
+        return String.format("| %s |", String.join(" | ", padded));
+    }
+
+    private static String horizontalSeparator(int[] widths) {
+        var sep = new String[widths.length];
+        for (int i = 0; i < widths.length; i++) {
+            sep[i] = new String(new char[widths[i]]).replace("\0", "-");
+        }
+        return formatColumns(widths, sep);
     }
 
     void addRow(String... columns) {
@@ -33,27 +54,6 @@ class Table {
             }
         }
         return maxLengths;
-    }
-
-    private static String padRight(String s, int n) {
-        return String.format("%-" + n + "s", s);
-    }
-
-    private static String formatColumns(int[] widths, String[] columns) {
-        int numColumns = widths.length;
-        var padded = new String[numColumns];
-        for (int i = 0; i < numColumns; i++) {
-            padded[i] = padRight(columns[i], widths[i]);
-        }
-        return String.format("| %s |", String.join(" | ", padded));
-    }
-
-    private static String horizontalSeparator(int[] widths) {
-        var sep = new String[widths.length];
-        for (int i = 0; i < widths.length; i++) {
-            sep[i] = new String(new char[widths[i]]).replace("\0", "-");
-        }
-        return formatColumns(widths, sep);
     }
 
     @Override

@@ -4,7 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Arrays;
 
-public class PasswordHash {
+class PasswordHash {
     private byte[] digest;
 
     PasswordHash(String password) {
