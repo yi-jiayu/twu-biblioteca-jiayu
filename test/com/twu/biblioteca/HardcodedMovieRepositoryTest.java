@@ -1,34 +1,34 @@
 package com.twu.biblioteca;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import java.util.stream.Collectors;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.collection.IsIterableContainingInAnyOrder.containsInAnyOrder;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.Assert.*;
-
-public class HardcodedMovieRepositoryTest {
+class HardcodedMovieRepositoryTest {
     @Test
-    public void allMoviesAvailableBeforeCheckout() {
+    void allMoviesAvailableBeforeCheckout() {
         var repo = new HardcodedMovieRepository();
         var all = repo.listAllMovies();
         var available = repo.listAvailableMovies();
-        assertEquals(all, available);
+        assertThat(available, containsInAnyOrder(all.toArray()));
     }
 
     @Test
-    public void movieNoLongerAvailableAfterCheckout() {
+    void movieNoLongerAvailableAfterCheckout() {
         var repo = new HardcodedMovieRepository();
         var result = repo.checkoutMovie(new User(), "Avatar");
         assertTrue(result);
         var available = repo.listAvailableMovies();
         var expected = repo.listAllMovies().stream()
                 .filter(m -> !m.getName().equals("Avatar"))
-                .collect(Collectors.toList());
-        assertEquals(expected, available);
+                .toArray();
+        assertThat(available, containsInAnyOrder(expected));
     }
 
     @Test
-    public void onlyUserWhoCheckedOutMovieCanReturn() {
+    void onlyUserWhoCheckedOutMovieCanReturn() {
         var repo = new HardcodedMovieRepository();
         repo.checkoutMovie(new User(), "Avatar");
         var result = repo.returnMovie(new User(), "Avatar");
@@ -36,7 +36,7 @@ public class HardcodedMovieRepositoryTest {
     }
 
     @Test
-    public void movieAvailableAgainAfterReturn() {
+    void movieAvailableAgainAfterReturn() {
         var repo = new HardcodedMovieRepository();
         var user = new User();
         repo.checkoutMovie(user, "Avatar");
@@ -44,6 +44,6 @@ public class HardcodedMovieRepositoryTest {
         assertTrue(result);
         var all = repo.listAllMovies();
         var available = repo.listAvailableMovies();
-        assertEquals(all, available);
+        assertThat(available, containsInAnyOrder(all.toArray()));
     }
 }

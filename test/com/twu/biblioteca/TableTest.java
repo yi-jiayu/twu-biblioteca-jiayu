@@ -1,12 +1,12 @@
 package com.twu.biblioteca;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TableTest {
+class TableTest {
     @Test
-    public void testTable() {
+    void testTable() {
         var table = new Table("Title", "Author", "Year published");
         table.addRow("Compilers: Principles, Techniques, and Tools", "Alfred V. Aho, Monica S. Lam, Ravi Sethi, and Jeffrey D. Ullman", "1986");
         table.addRow("Introduction to Algorithms", "Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest and Clifford Stein", "1990");

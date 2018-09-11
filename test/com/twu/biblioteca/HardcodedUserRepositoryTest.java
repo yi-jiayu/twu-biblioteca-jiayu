@@ -1,21 +1,23 @@
 package com.twu.biblioteca;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class HardcodedUserRepositoryTest {
+
+class HardcodedUserRepositoryTest {
     private final UserRepository usersRepository = new HardcodedUserRepository();
 
     @Test
-    public void successfulLogin() throws InvalidLibraryNumberException, LoginFailedException {
+    void successfulLogin() throws InvalidLibraryNumberException, LoginFailedException {
         var ln = new LibraryNumber("123-4567");
         var pw = new PasswordHash("password123");
         usersRepository.login(ln, pw);
     }
 
-    @Test(expected = LoginFailedException.class)
-    public void unsuccessfulLogin() throws InvalidLibraryNumberException, LoginFailedException {
+    @Test
+    void unsuccessfulLogin() throws InvalidLibraryNumberException {
         var ln = new LibraryNumber("123-4567");
         var pw = new PasswordHash("aoeuidhtns");
-        usersRepository.login(ln, pw);
+        assertThrows(LoginFailedException.class, () -> usersRepository.login(ln, pw));
     }
 }
