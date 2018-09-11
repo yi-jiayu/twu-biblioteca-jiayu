@@ -8,10 +8,14 @@ import java.util.Scanner;
 public class BibliotecaApp {
     private static final String welcomeMsg = "Welcome to Biblioteca!";
     private static final String invalidOptionMsg = "Select a valid option!";
-    private static final String checkoutSuccessMsg = "Thank you! Enjoy the book";
-    private static final String checkoutFailureMsg = "That book is not available";
-    private static final String returnSuccessMsg = "Thank you for returning the book.";
-    private static final String returnFailureMsg = "That is not a valid book to return.";
+    private static final String checkoutBookSuccess = "Thank you! Enjoy the book";
+    private static final String checkoutBookFailure = "That book is not available";
+    private static final String checkoutMovieSuccess = "Thank you! Enjoy the movie";
+    private static final String checkoutMovieFailure = "That movie is not available";
+    private static final String returnBookSuccess = "Thank you for returning the book.";
+    private static final String returnBookFailure = "That is not a valid book to return.";
+    private static final String returnMovieSuccess = "Thank you for returning the movie.";
+    private static final String returnMovieFailure = "That is not a valid movie to return.";
     private final BookRepository bookRepository;
     private final MovieRepository movieRepository;
     private final UserRepository userRepository;
@@ -71,8 +75,8 @@ public class BibliotecaApp {
                         this.returnBook();
                         break;
                     case "returnMovie":
-                        // TODO: 2018-09-11 implement return movie
-                        throw new RuntimeException("not implemented!");
+                        this.returnMovie();
+                        break;
                     case "login":
                         this.login();
                         break;
@@ -98,11 +102,42 @@ public class BibliotecaApp {
 
     private void listMovies() {
         var table = new Table("Name", "Year", "Director", "Rating");
-        var availableMovies = movieRepository.listAvailableMovies();
-        for (Movie movie : availableMovies) {
+        var movies = movieRepository.listAvailableMovies();
+        for (Movie movie : movies) {
             table.addRow(movie.getName(), Integer.toString(movie.getYear()), movie.getDirector(), movie.getRating());
         }
         this.os.println(table);
+        this.borrowMovie(movies);
+    }
+
+    private void borrowMovie(List<Movie> movies) {
+        if (user == null) {
+            this.os.println("You must be logged in to borrow movies.");
+            return;
+        }
+
+        while (true) {
+            var options = new Options(this.sc, this.os, "Which movie would you like to borrow?");
+            for (Movie movie : movies) {
+                options.addOption(movie.getName(), movie.getName());
+            }
+            options.addOption("back", "Back to main menu");
+            try {
+                var name = options.getChoice();
+                if (name.equals("back")) {
+                    return;
+                }
+                var success = movieRepository.checkoutMovie(user, name);
+                if (success) {
+                    this.os.println(checkoutMovieSuccess);
+                    return;
+                } else {
+                    this.os.println(checkoutMovieFailure);
+                }
+            } catch (InvalidChoiceException e) {
+                this.os.println(invalidOptionMsg);
+            }
+        }
     }
 
     private void listBooks() {
@@ -134,10 +169,10 @@ public class BibliotecaApp {
                 }
                 var success = bookRepository.checkoutTitle(user, title);
                 if (success) {
-                    this.os.println(checkoutSuccessMsg);
+                    this.os.println(checkoutBookSuccess);
                     return;
                 } else {
-                    this.os.println(checkoutFailureMsg);
+                    this.os.println(checkoutBookFailure);
                 }
             } catch (InvalidChoiceException e) {
                 this.os.println(invalidOptionMsg);
@@ -153,9 +188,23 @@ public class BibliotecaApp {
         this.os.println("What is the title of the book you wish to return?");
         var title = sc.nextLine();
         if (this.bookRepository.returnTitle(user, title)) {
-            this.os.println(returnSuccessMsg);
+            this.os.println(returnBookSuccess);
         } else {
-            this.os.println(returnFailureMsg);
+            this.os.println(returnBookFailure);
+        }
+    }
+
+    private void returnMovie() {
+        if (user == null) {
+            this.os.println("You must be logged in to return movies.");
+            return;
+        }
+        this.os.println("What is the name of the movie you wish to return?");
+        var name = sc.nextLine();
+        if (this.movieRepository.returnMovie(user, name)) {
+            this.os.println(returnMovieSuccess);
+        } else {
+            this.os.println(returnMovieFailure);
         }
     }
 

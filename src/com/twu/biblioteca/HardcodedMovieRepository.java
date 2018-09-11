@@ -24,9 +24,8 @@ public class HardcodedMovieRepository implements MovieRepository {
 
     @Override
     public List<Movie> listAvailableMovies() {
-        return statuses.entrySet().stream()
-                .filter(e -> e.getValue().checkedOutBy == null)
-                .map(e -> e.getValue().movie)
+        return movies.stream()
+                .filter(m -> statuses.get(m.getName()).checkedOutBy == null)
                 .collect(Collectors.toList());
     }
 
@@ -43,7 +42,7 @@ public class HardcodedMovieRepository implements MovieRepository {
     @Override
     public synchronized boolean returnMovie(User user, String name) {
         var m = statuses.get(name);
-        if (m != null && m.checkedOutBy.equals(user)) {
+        if (m != null && m.checkedOutBy != null && m.checkedOutBy.equals(user)) {
             m.checkedOutBy = null;
             return true;
         }

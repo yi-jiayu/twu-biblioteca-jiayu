@@ -28,7 +28,7 @@ class BibliotecaAppTest {
     @Test
     void quit() {
         var input = new String[]{
-          "6", // quit
+                "6", // quit
         };
         String expected = "Welcome to Biblioteca!\n" +
                 "Please select an option:\n" +
@@ -269,6 +269,178 @@ class BibliotecaAppTest {
                 "(5) Log in\n" +
                 "(6) Quit\n" +
                 "> You must be logged in to return books.\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log in\n" +
+                "(6) Quit\n" +
+                "> ";
+        test(input, expected);
+    }
+
+    @Test
+    void successfulBorrowMovie() {
+        var input = new String[]{
+                "5", // login
+                "123-4567", // library number
+                "password123", // password
+                "2", // list movies
+                "1", // borrow first movie
+                "7", // quit
+        };
+        String expected = "Welcome to Biblioteca!\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log in\n" +
+                "(6) Quit\n" +
+                "> Library number: Password: Welcome, John Doe!\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log out\n" +
+                "(6) Account information\n" +
+                "(7) Quit\n" +
+                "> | Name                         | Year | Director       | Rating |\n" +
+                "| ---------------------------- | ---- | -------------- | ------ |\n" +
+                "| Avatar                       | 2008 | James Cameron  | 8      |\n" +
+                "| Titanic                      | 1997 | James Cameron  | 8      |\n" +
+                "| Star Wars: The Force Awakens | 2015 | J. J. Abrams   | 8      |\n" +
+                "| Avengers: Infinity War       | 2018 | Russo brothers | 9      |\n" +
+                "Which movie would you like to borrow?\n" +
+                "(1) Avatar\n" +
+                "(2) Titanic\n" +
+                "(3) Star Wars: The Force Awakens\n" +
+                "(4) Avengers: Infinity War\n" +
+                "(5) Back to main menu\n" +
+                "> Thank you! Enjoy the movie\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log out\n" +
+                "(6) Account information\n" +
+                "(7) Quit\n" +
+                "> Good-bye!\n";
+        test(input, expected);
+    }
+
+    @Test
+    void mustBeLoggedInToBorrowMovie() {
+        var input = new String[]{
+                "2", // list movies,
+        };
+        String expected = "Welcome to Biblioteca!\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log in\n" +
+                "(6) Quit\n" +
+                "> | Name                         | Year | Director       | Rating |\n" +
+                "| ---------------------------- | ---- | -------------- | ------ |\n" +
+                "| Avatar                       | 2008 | James Cameron  | 8      |\n" +
+                "| Titanic                      | 1997 | James Cameron  | 8      |\n" +
+                "| Star Wars: The Force Awakens | 2015 | J. J. Abrams   | 8      |\n" +
+                "| Avengers: Infinity War       | 2018 | Russo brothers | 9      |\n" +
+                "You must be logged in to borrow movies.\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log in\n" +
+                "(6) Quit\n" +
+                "> ";
+        test(input, expected);
+    }
+
+    @Test
+    void successfulReturnMovie() {
+        var input = new String[]{
+                "5", // login
+                "123-4567", // library number
+                "password123", // password
+                "2", // list movies
+                "1", // borrow first movie
+                "4", // return movie
+                "Avatar", // movie name
+                "7", // quit
+        };
+        String expected = "Welcome to Biblioteca!\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log in\n" +
+                "(6) Quit\n" +
+                "> Library number: Password: Welcome, John Doe!\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log out\n" +
+                "(6) Account information\n" +
+                "(7) Quit\n" +
+                "> | Name                         | Year | Director       | Rating |\n" +
+                "| ---------------------------- | ---- | -------------- | ------ |\n" +
+                "| Avatar                       | 2008 | James Cameron  | 8      |\n" +
+                "| Titanic                      | 1997 | James Cameron  | 8      |\n" +
+                "| Star Wars: The Force Awakens | 2015 | J. J. Abrams   | 8      |\n" +
+                "| Avengers: Infinity War       | 2018 | Russo brothers | 9      |\n" +
+                "Which movie would you like to borrow?\n" +
+                "(1) Avatar\n" +
+                "(2) Titanic\n" +
+                "(3) Star Wars: The Force Awakens\n" +
+                "(4) Avengers: Infinity War\n" +
+                "(5) Back to main menu\n" +
+                "> Thank you! Enjoy the movie\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log out\n" +
+                "(6) Account information\n" +
+                "(7) Quit\n" +
+                "> What is the name of the movie you wish to return?\n" +
+                "Thank you for returning the movie.\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log out\n" +
+                "(6) Account information\n" +
+                "(7) Quit\n" +
+                "> Good-bye!\n";
+        test(input, expected);
+    }
+
+    @Test
+    void mustBeLoggedInToReturnMovie() {
+        var input = new String[]{
+                "4", // return movie,
+        };
+        String expected = "Welcome to Biblioteca!\n" +
+                "Please select an option:\n" +
+                "(1) List books\n" +
+                "(2) List movies\n" +
+                "(3) Return book\n" +
+                "(4) Return movie\n" +
+                "(5) Log in\n" +
+                "(6) Quit\n" +
+                "> You must be logged in to return movies.\n" +
                 "Please select an option:\n" +
                 "(1) List books\n" +
                 "(2) List movies\n" +

@@ -23,9 +23,8 @@ public class HardcodedBookRepository implements BookRepository {
 
     @Override
     public List<Book> listAvailableBooks() {
-        return statuses.entrySet().stream()
-                .filter(e -> e.getValue().checkedOutBy == null)
-                .map(e -> e.getValue().book)
+        return books.stream()
+                .filter(b -> statuses.get(b.getTitle()).checkedOutBy == null)
                 .collect(Collectors.toList());
     }
 
@@ -42,7 +41,7 @@ public class HardcodedBookRepository implements BookRepository {
     @Override
     public synchronized boolean returnTitle(User user, String title) {
         var m = statuses.get(title);
-        if (m != null && m.checkedOutBy.equals(user)) {
+        if (m != null && m.checkedOutBy != null && m.checkedOutBy.equals(user)) {
             m.checkedOutBy = null;
             return true;
         }
