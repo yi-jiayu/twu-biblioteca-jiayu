@@ -37,6 +37,7 @@ sourceSets {
     test {
         java {
             srcDir 'test'
+            srcDir 'integrationtest'
         }
     }
 }

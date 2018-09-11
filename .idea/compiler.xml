@@ -14,6 +14,7 @@
       <entry name="?*.ftl" />
     </wildcardResourcePatterns>
     <bytecodeTargetLevel>
+      <module name="TWU_Biblioteca_integrationtest" target="1.10" />
       <module name="TWU_Biblioteca_main" target="1.10" />
       <module name="TWU_Biblioteca_test" target="1.10" />
     </bytecodeTargetLevel>

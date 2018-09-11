@@ -1,25 +1,20 @@
 package com.twu.biblioteca;
 
-import java.io.InputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
 class Options {
-    private InputStream is = System.in;
-    private PrintStream os = System.out;
+    private final Scanner sc;
+    private final PrintStream os;
 
     private final String prompt;
     private final List<String> keys = new ArrayList<>();
     private final List<String> options = new ArrayList<>();
 
-    Options(String prompt) {
-        this.prompt = prompt;
-    }
-
-    public Options(InputStream is, PrintStream os, String prompt) {
-        this.is = is;
+    Options(Scanner sc, PrintStream os, String prompt) {
+        this.sc = sc;
         this.os = os;
         this.prompt = prompt;
     }
@@ -35,10 +30,10 @@ class Options {
             // i + 1 so the options are numbered starting from 1
             this.os.printf("(%d) %s\n", i + 1, options.get(i));
         }
+        this.os.print("> ");
     }
 
     String getChoice() throws InvalidChoiceException {
-        var sc = new Scanner(this.is);
         this.show();
         try {
             var index = Integer.parseInt(sc.nextLine());
