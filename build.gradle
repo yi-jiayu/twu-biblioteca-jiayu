@@ -1,7 +1,19 @@
 apply plugin: 'java'
+apply plugin: 'jacoco'
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     compile files('lib/junit-4.11.jar')
+}
+
+test {
+    testLogging {
+        events "passed", "skipped", "failed"
+        showStandardStreams true
+    }
 }
 
 sourceSets {
@@ -17,3 +29,13 @@ sourceSets {
         }
     }
 }
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        csv.enabled false
+        html.enabled true
+    }
+}
+
+check.dependsOn jacocoTestReport
