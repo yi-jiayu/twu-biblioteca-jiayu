@@ -21,15 +21,15 @@ class OptionsTest {
         var options = new Options(new Scanner(is), os, "Which book do you want to borrow?");
         options.addOption("hp1", "Harry Potter and the Philosopher's Stone");
         options.addOption("hp2", "Harry Potter and the Chamber of Secrets");
-        var selected = options.getChoice();
-        assertEquals("hp1", selected);
+        var choice = options.getChoice();
         String expected = "Which book do you want to borrow?\n" +
                 "(1) Harry Potter and the Philosopher's Stone\n" +
                 "(2) Harry Potter and the Chamber of Secrets\n" +
                 "> ";
         // replace line endings on windows
-        String actual = buf.toString().replace("\r\n", "\n");
-        assertEquals(expected, actual);
+        String output = buf.toString().replace("\r\n", "\n");
+        assertEquals("hp1", choice);
+        assertEquals(expected, output);
     }
 
     @Test

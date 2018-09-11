@@ -23,11 +23,11 @@ class HardcodedMovieRepositoryTest {
         var repo = new HardcodedMovieRepository();
         var movie = repo.listAllMovies().stream().findFirst().orElseThrow();
         var result = repo.checkoutMovie(new User(), movie.getName());
-        assertTrue(result);
         var available = repo.listAvailableMovies();
         var expected = repo.listAllMovies().stream()
                 .filter(m -> !m.getName().equals(movie.getName()))
                 .toArray();
+        assertTrue(result);
         assertThat(available, containsInAnyOrder(expected));
     }
 
@@ -47,9 +47,9 @@ class HardcodedMovieRepositoryTest {
         var user = new User();
         repo.checkoutMovie(user, movie.getName());
         var result = repo.returnMovie(user, movie.getName());
-        assertTrue(result);
         var all = repo.listAllMovies();
         var available = repo.listAvailableMovies();
+        assertTrue(result);
         assertThat(available, containsInAnyOrder(all.toArray()));
     }
 

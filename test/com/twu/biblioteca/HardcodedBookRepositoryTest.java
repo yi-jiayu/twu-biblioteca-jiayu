@@ -23,11 +23,11 @@ class HardcodedBookRepositoryTest {
         var repo = new HardcodedBookRepository();
         var book = repo.listAllBooks().stream().findFirst().orElseThrow();
         var result = repo.checkoutTitle(new User(), book.getTitle());
-        assertTrue(result);
         var available = repo.listAvailableBooks();
         var expected = repo.listAllBooks().stream()
                 .filter(m -> !m.getTitle().equals(book.getTitle()))
                 .toArray();
+        assertTrue(result);
         assertThat(available, containsInAnyOrder(expected));
     }
 
@@ -47,9 +47,9 @@ class HardcodedBookRepositoryTest {
         var user = new User();
         repo.checkoutTitle(user, book.getTitle());
         var result = repo.returnTitle(user, book.getTitle());
-        assertTrue(result);
         var all = repo.listAllBooks();
         var available = repo.listAvailableBooks();
+        assertTrue(result);
         assertThat(available, containsInAnyOrder(all.toArray()));
     }
 
