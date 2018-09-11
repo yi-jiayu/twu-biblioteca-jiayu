@@ -27,8 +27,10 @@ class Movie {
         return director;
     }
 
-    public int getRating() {
-        return rating;
+    public String getRating() {
+        if (rating >= 1 && rating <= 10) {
+            return Integer.toString(rating);
+        } else return "Unrated";
     }
 
     @Override

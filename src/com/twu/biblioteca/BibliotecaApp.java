@@ -5,20 +5,27 @@ import java.util.Scanner;
 
 class BibliotecaApp {
     private String welcomeMsg = "Welcome to Biblioteca!";
-    public static final String invalidOptionMsg = "Select a valid option!";
+    private static final String invalidOptionMsg = "Select a valid option!";
     private static final String checkoutSuccessMsg = "Thank you! Enjoy the book";
     private static final String checkoutFailureMsg = "That book is not available";
     private static final String returnSuccessMsg = "Thank you for returning the book.";
     private static final String returnFailureMsg = "That is not a valid book to return.";
 
-    private BookRepository bookRepo = new HardcodedBookRepository();
+    private final BookRepository bookRepository;
+    private final MovieRepository movieRepository;
+    private final UserRepository userRepository;
 
     private BibliotecaApp() {
+        bookRepository = new HardcodedBookRepository();
+        movieRepository = new HardcodedMovieRepository();
+        userRepository = new HardcodedUserRepository();
     }
 
-    public BibliotecaApp(String welcomeMsg, BookRepository bookRepo) {
+    public BibliotecaApp(String welcomeMsg, BookRepository bookRepository, MovieRepository movieRepository, UserRepository userRepository) {
         this.welcomeMsg = welcomeMsg;
-        this.bookRepo = bookRepo;
+        this.bookRepository = bookRepository;
+        this.movieRepository = movieRepository;
+        this.userRepository = userRepository;
     }
 
     public static void main(String[] args) {
@@ -29,18 +36,22 @@ class BibliotecaApp {
     private void start() {
         showWelcomeMessage();
         var mainMenu = new Options("Please select an option:");
-        mainMenu.addOption("list", "List books");
-        mainMenu.addOption("return", "Return book");
+        mainMenu.addOption("listBooks", "List books");
+        mainMenu.addOption("returnBook", "Return book");
+        mainMenu.addOption("listMovies", "List movies");
         mainMenu.addOption("quit", "Quit");
         while (true) {
             try {
                 var option = mainMenu.getChoice();
                 switch (option) {
-                    case "list":
+                    case "listBooks":
                         this.listBooks();
                         break;
-                    case "return":
+                    case "returnBook":
                         this.returnBook();
+                        break;
+                    case "listMovies":
+                        this.listMovies();
                         break;
                     case "quit":
                         System.out.println("Good-bye!");
@@ -56,11 +67,20 @@ class BibliotecaApp {
         System.out.println(welcomeMsg);
     }
 
+    private void listMovies() {
+        var table = new Table("Name", "Year", "Director", "Rating");
+        var availableMovies = movieRepository.listAvailableMovies();
+        for (Movie movie : availableMovies) {
+            table.addRow(movie.getName(), Integer.toString(movie.getYear()), movie.getDirector(), movie.getRating());
+        }
+        System.out.println(table);
+    }
+
     private void listBooks() {
         var table = new Table("Title", "Author", "Year Published");
-        List<Book> books = bookRepo.listBooks();
+        List<Book> books = bookRepository.listAvailableBooks();
         for (Book book : books) {
-            table.addRow(book.title, book.author, Integer.toString(book.yearPublished));
+            table.addRow(book.getTitle(), book.getAuthor(), Integer.toString(book.getYear()));
         }
         System.out.println(table);
         borrowBooks(books);
@@ -70,7 +90,7 @@ class BibliotecaApp {
         while (true) {
             var options = new Options("Which book would you like to borrow?");
             for (Book book : books) {
-                options.addOption(book.title, book.title);
+                options.addOption(book.getTitle(), book.getTitle());
             }
             options.addOption("back", "Back to main menu");
             try {
@@ -78,7 +98,7 @@ class BibliotecaApp {
                 if (title.equals("back")) {
                     return;
                 }
-                var success = bookRepo.checkoutTitle(title);
+                var success = bookRepository.checkoutTitle(new User(), title);
                 if (success) {
                     System.out.println(checkoutSuccessMsg);
                     return;
@@ -95,7 +115,7 @@ class BibliotecaApp {
         System.out.println("What is the title of the book you wish to return?");
         var sc = new Scanner(System.in);
         var title = sc.nextLine();
-        if (this.bookRepo.returnTitle(title)) {
+        if (this.bookRepository.returnTitle(new User(), title)) {
             System.out.println(returnSuccessMsg);
         } else {
             System.out.println(returnFailureMsg);

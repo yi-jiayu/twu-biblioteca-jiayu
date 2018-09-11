@@ -2,10 +2,12 @@ package com.twu.biblioteca;
 
 import java.util.List;
 
-public interface BookRepository {
-    List<Book> listBooks();
+interface BookRepository {
+    List<Book> listAllBooks();
 
-    boolean checkoutTitle(String title);
+    List<Book> listAvailableBooks();
 
-    boolean returnTitle(String title);
+    boolean checkoutTitle(User user, String title);
+
+    boolean returnTitle(User user, String title);
 }

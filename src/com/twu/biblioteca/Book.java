@@ -2,15 +2,27 @@ package com.twu.biblioteca;
 
 import java.util.Objects;
 
-public class Book {
-    final String title;
-    final String author;
-    final int yearPublished;
+class Book {
+    private final String title;
+    private final String author;
+    private final int year;
 
-    public Book(String title, String author, int yearPublished) {
+    Book(String title, String author, int year) {
         this.title = title;
         this.author = author;
-        this.yearPublished = yearPublished;
+        this.year = year;
+    }
+
+    String getTitle() {
+        return title;
+    }
+
+    String getAuthor() {
+        return author;
+    }
+
+    int getYear() {
+        return year;
     }
 
     @Override
@@ -18,13 +30,13 @@ public class Book {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Book book = (Book) o;
-        return yearPublished == book.yearPublished &&
+        return year == book.year &&
                 Objects.equals(title, book.title) &&
                 Objects.equals(author, book.author);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, author, yearPublished);
+        return Objects.hash(title, author, year);
     }
 }

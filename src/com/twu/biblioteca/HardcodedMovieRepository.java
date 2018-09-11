@@ -24,8 +24,9 @@ public class HardcodedMovieRepository implements MovieRepository {
 
     @Override
     public List<Movie> listAvailableMovies() {
-        return movies.stream()
-                .filter(m -> statuses.get(m.getName()).checkedOutBy == null)
+        return statuses.entrySet().stream()
+                .filter(e -> e.getValue().checkedOutBy == null)
+                .map(e -> e.getValue().movie)
                 .collect(Collectors.toList());
     }
 
@@ -49,11 +50,11 @@ public class HardcodedMovieRepository implements MovieRepository {
         return false;
     }
 
-    class MovieStatus {
-        final Movie movie;
-        User checkedOutBy;
+    private class MovieStatus {
+        private final Movie movie;
+        private User checkedOutBy = null;
 
-        MovieStatus(Movie movie) {
+        private MovieStatus(Movie movie) {
             this.movie = movie;
         }
     }
