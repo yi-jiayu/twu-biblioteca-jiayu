@@ -1,17 +1,15 @@
 package com.twu.biblioteca;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class HardcodedBookRepositoryTest {
+class HardcodedBookRepositoryTest {
     @Test
-    public void listBooks() {
+    void listBooks() {
         var bookRepo = new HardcodedBookRepository();
         var actual = bookRepo.listBooks();
         var expected = new ArrayList<Book>();
@@ -22,7 +20,7 @@ public class HardcodedBookRepositoryTest {
     }
 
     @Test
-    public void checkoutTitleSuccess() {
+    void checkoutTitleSuccess() {
         var bookRepo = new HardcodedBookRepository();
         var success = bookRepo.checkoutTitle("Compilers: Principles, Techniques, and Tools");
         assertTrue(success);
@@ -34,7 +32,7 @@ public class HardcodedBookRepositoryTest {
     }
 
     @Test
-    public void checkoutTitleFailure() {
+    void checkoutTitleFailure() {
         var bookRepo = new HardcodedBookRepository();
         var success = bookRepo.checkoutTitle("Principles, Techniques, and Tools");
         assertFalse(success);
@@ -47,7 +45,7 @@ public class HardcodedBookRepositoryTest {
     }
 
     @Test
-    public void returnTitleSuccess() {
+    void returnTitleSuccess() {
         var bookRepo = new HardcodedBookRepository();
         bookRepo.onLoan.put("Compilers: Principles, Techniques, and Tools", true);
         bookRepo.returnTitle("Compilers: Principles, Techniques, and Tools");
@@ -60,7 +58,7 @@ public class HardcodedBookRepositoryTest {
     }
 
     @Test
-    public void returnTitleFailure() {
+    void returnTitleFailure() {
         var bookRepo = new HardcodedBookRepository();
         bookRepo.books = bookRepo.books.stream().filter(book -> !book.title.equals("Compilers: Principles, Techniques, and Tools")).collect(Collectors.toList());
         bookRepo.onLoan.put("Compilers: Principles, Techniques, and Tools", true);

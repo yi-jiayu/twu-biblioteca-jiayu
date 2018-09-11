@@ -1,17 +1,17 @@
 package com.twu.biblioteca;
 
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class OptionsTest {
+class OptionsTest {
     @Test
-    public void testValid() throws InvalidChoiceException {
+    void testValid() throws InvalidChoiceException {
         var is = new ByteArrayInputStream("1\n".getBytes());
         var buf = new ByteArrayOutputStream();
         var os = new PrintStream(buf);
@@ -29,8 +29,8 @@ public class OptionsTest {
         assertEquals(expected, actual);
     }
 
-    @Test(expected = InvalidChoiceException.class)
-    public void testNoSuchOption() throws InvalidChoiceException {
+    @Test
+    void testNoSuchOption() {
         var is = new ByteArrayInputStream("3\n".getBytes());
         var buf = new ByteArrayOutputStream();
         var os = new PrintStream(buf);
@@ -38,11 +38,11 @@ public class OptionsTest {
         var options = new Options(is, os, "Which book do you want to borrow?");
         options.addOption("hp1", "Harry Potter and the Philosopher's Stone");
         options.addOption("hp2", "Harry Potter and the Chamber of Secrets");
-        options.getChoice();
+        assertThrows(InvalidChoiceException.class, options::getChoice);
     }
 
-    @Test(expected = InvalidChoiceException.class)
-    public void testInvalidInput() throws InvalidChoiceException {
+    @Test
+    void testInvalidInput() {
         var is = new ByteArrayInputStream("hello\n".getBytes());
         var buf = new ByteArrayOutputStream();
         var os = new PrintStream(buf);
@@ -50,6 +50,6 @@ public class OptionsTest {
         var options = new Options(is, os, "Which book do you want to borrow?");
         options.addOption("hp1", "Harry Potter and the Philosopher's Stone");
         options.addOption("hp2", "Harry Potter and the Chamber of Secrets");
-        options.getChoice();
+        assertThrows(InvalidChoiceException.class, options::getChoice);
     }
 }
