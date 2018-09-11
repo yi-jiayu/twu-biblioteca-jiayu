@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/biblioteca.iml" filepath="$PROJECT_DIR$/biblioteca.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TWU_Biblioteca.iml" filepath="$PROJECT_DIR$/.idea/modules/TWU_Biblioteca.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TWU_Biblioteca_main.iml" filepath="$PROJECT_DIR$/.idea/modules/TWU_Biblioteca_main.iml" group="TWU_Biblioteca" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TWU_Biblioteca_test.iml" filepath="$PROJECT_DIR$/.idea/modules/TWU_Biblioteca_test.iml" group="TWU_Biblioteca" />
     </modules>
   </component>
 </project>
-
