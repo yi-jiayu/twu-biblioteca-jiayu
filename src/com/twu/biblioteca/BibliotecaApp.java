@@ -80,8 +80,8 @@ public class BibliotecaApp {
                         this.accountInfo();
                         break;
                     case "logout":
-                        // TODO: 2018-09-11 implement logout
-                        throw new RuntimeException("not implemented!");
+                        this.logout();
+                        break;
                     case "quit":
                         this.os.println("Good-bye!");
                         return;
@@ -182,8 +182,15 @@ public class BibliotecaApp {
         this.os.printf("Welcome, %s!\n", this.user.getName());
     }
 
+    private void logout() {
+        this.user = null;
+        this.os.println("Logged out!");
+    }
+
     private void accountInfo() {
-        // TODO: 2018-09-11 implement account info
-        throw new RuntimeException("not implemented!");
+        this.os.printf("Library number: %s\n", user.getLibraryNumber());
+        this.os.printf("Name: %s\n", user.getName());
+        this.os.printf("Email: %s\n", user.getEmail());
+        this.os.printf("Phone: %s\n", user.getPhone());
     }
 }
